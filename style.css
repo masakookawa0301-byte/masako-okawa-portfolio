@@ -110,7 +110,7 @@ body.viewer-open{overflow:hidden}#image-viewer{position:fixed;inset:0;width:100v
 /* Mobile-only larger opening and persistent navigation. */
 @media(max-width:650px){
  .content .intro-title{font-size:clamp(41.8px,12.1vw,74.8px)}
- .sidebar{position:sticky;top:0;z-index:3;margin-top:-28px;padding-top:28px;padding-bottom:16px}
+ .sidebar{position:sticky;top:0;z-index:3;margin-top:-28px;padding-top:28px;padding-bottom:16px;transform:translateZ(0);-webkit-transform:translateZ(0)}
  .sidebar:before{top:0;bottom:0;height:auto}
  .contact-button{position:fixed;z-index:4}
  html{scroll-padding-top:var(--mobile-nav-height,190px)}
@@ -120,7 +120,7 @@ body.viewer-open{overflow:hidden}#image-viewer{position:fixed;inset:0;width:100v
 /* Contact joins desktop navigation; the mobile header folds into six controls. */
 .contact-button{position:static;align-self:flex-start;margin-top:36px}
 @media(max-width:650px){
- .sidebar{transition:padding .2s ease;overflow-anchor:none}
+ .sidebar{overflow-anchor:none}
  .sidebar h1{max-height:80px;overflow:hidden;transition:max-height .2s ease,opacity .15s ease,margin .2s ease}
  .sidebar .contact-button{position:absolute;top:20px;right:0;margin:0}
  .sidebar.is-compact{padding-top:8px;padding-bottom:8px}

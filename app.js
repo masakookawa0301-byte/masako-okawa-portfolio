@@ -371,7 +371,7 @@ function revealWorks(){
   content.querySelectorAll('.project').forEach(article=>{article.classList.add('will-reveal');workObserver.observe(article)});
 }
 motionPreference.addEventListener('change',()=>{workObserver?.disconnect();content.querySelectorAll('.will-reveal').forEach(article=>article.classList.remove('will-reveal'));});
-const introSelection=[0,usb.interview,usb.pamph,1,usb.hapyo,usb.style,usb.flyers,usb.logo,9,3,19,5,14,15,10,11,7,4,6];
+const introSelection=[0,usb.interview,usb.pamph,1,usb.hapyo,usb.style,usb.flyers,9,3,19,5,14,15,10,11,7,4,6];
 for(let i=introSelection.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[introSelection[i],introSelection[j]]=[introSelection[j],introSelection[i]];}
 function mountWorkLoop(){
  const title=content.querySelector('.intro-title');
