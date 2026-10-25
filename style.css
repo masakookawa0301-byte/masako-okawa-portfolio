@@ -316,6 +316,9 @@ body.viewer-open{overflow:hidden}#image-viewer{position:fixed;inset:0;width:100v
 .contact-button:focus-visible{outline-color:#fff}
 @media(max-width:650px){
  .sidebar:before{background:linear-gradient(135deg,#8ddcf7 0%,#4ea9ea 55%,#2f68d8 100%)}
- .sidebar nav,.sidebar.is-compact nav{background:transparent}
+ .sidebar .mobile-menu-toggle,.sidebar.is-compact .mobile-menu-toggle{color:#fff}
+ .sidebar nav,.sidebar.is-compact nav{background:#2f5fc9;box-shadow:0 14px 24px rgba(19,38,94,.22)}
+ .sidebar nav .menu-link,.sidebar.is-compact nav .menu-link{color:#fff;opacity:.92}
+ .sidebar nav .menu-link:hover,.sidebar nav .menu-link[aria-pressed="true"],.sidebar.is-compact nav .menu-link:hover,.sidebar.is-compact nav .menu-link[aria-pressed="true"]{opacity:1}
 }
 
