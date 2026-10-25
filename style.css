@@ -304,7 +304,8 @@ body.viewer-open{overflow:hidden}#image-viewer{position:fixed;inset:0;width:100v
 .sidebar h1{color:#fff}
 .sidebar h1>span{color:rgba(255,255,255,.72)}
 .sidebar nav{border-color:rgba(255,255,255,.22)}
-.menu-link{color:#fff;opacity:.88;text-shadow:0 1px 6px rgba(15,40,90,.22)}
+.menu-link,.menu-link:hover,.menu-link[aria-pressed="true"]{color:#fff}
+.menu-link{opacity:.88;text-shadow:0 1px 6px rgba(15,40,90,.22)}
 .menu-link:hover,.menu-link[aria-pressed="true"]{opacity:1}
 .sidebar h1,.copyright{text-shadow:0 1px 6px rgba(15,40,90,.18)}
 .menu-link[aria-pressed="true"]>span:last-child,.menu-link:hover>span:last-child{text-decoration-color:#fff}
