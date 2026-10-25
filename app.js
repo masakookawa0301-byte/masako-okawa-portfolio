@@ -361,7 +361,8 @@ projects.push(
   details:[],
   images:[{src:'assets/ai-indesign.webp',width:1600,height:1600,caption:'表組の一括連結・削除・整列・列数変更（イラストは架空）',alt:'データ結合で配置した表組をスクリプトで連結し、削除すると自動で詰まり、整列や列数変更にも対応する流れを示す図'}]}
 );
-const panels={profile:[],design:[{heading:'文教関連'},0,1,usb.line,usb.hapyo,usb.pamph,usb.flyers,usb.interview,usb.style,9,18,19,10,11,13,5,7,8,usb.logo],illustration:[3,14,15,16,17],research:[4,6],ai:[aiStart,aiStart+1,aiStart+2]};
+usb.xsol=projects.push({"title": "XSOL（エクソル）｜蓄電池導入提案ツール「停電レス・救」", "description": "蓄電池販売企業エクソル（XSOL）の提案ツール制作に、企画・校正として参加。お客様のニーズに応じて最適な製品タイプ（太陽光発電システム／ハイブリッド蓄電システム／ポータブルバッテリー／単機能型蓄電池）を振り分けるフローチャートの作成と、関連調査を担当しました。", "images": [{"src": "assets/xsol-resq-flowchart.webp", "width": 1994, "height": 1410, "caption": "お客様のニーズ別に最適な製品タイプを振り分けるフローチャート", "alt": "XSOLの蓄電池提案ツール「停電レス・救」より、お客様のニーズ別に太陽光発電・蓄電池の製品タイプA〜Dを振り分けるフローチャート"}], "details": []})-1;
+const panels={profile:[],design:[{heading:'文教関連'},0,1,usb.line,usb.hapyo,usb.pamph,usb.flyers,usb.interview,usb.style,9,18,19,10,11,13,5,7,8,usb.logo],illustration:[3,14,15,16,17],research:[4,6,usb.xsol],ai:[aiStart,aiStart+1,aiStart+2]};
 const motionPreference=window.matchMedia('(prefers-reduced-motion: reduce)');
 let workObserver;
 function revealWorks(){
