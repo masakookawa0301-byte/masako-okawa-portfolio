@@ -299,3 +299,20 @@ body.viewer-open{overflow:hidden}#image-viewer{position:fixed;inset:0;width:100v
 @media(max-width:650px){.sidebar h1{letter-spacing:.02em}}
 /* Back on the bold gothic, restore its tuned optical kerning (set earlier in the file). */
 
+/* Bold mesh-gradient treatment for the sidebar's blue field, replacing the flat tint. */
+.sidebar:before{background:radial-gradient(125% 75% at 90% 102%,rgba(226,109,83,.5),transparent 60%),radial-gradient(85% 55% at 4% -8%,rgba(255,255,255,.4),transparent 55%),linear-gradient(162deg,#11235c 0%,#1f46c0 40%,#3f63d9 68%,#6457c9 100%)}
+.sidebar h1{color:#fff}
+.sidebar h1>span{color:rgba(255,255,255,.72)}
+.sidebar nav{border-color:rgba(255,255,255,.22)}
+.menu-link{color:#fff}
+.menu-link[aria-pressed="true"]>span:last-child,.menu-link:hover>span:last-child{text-decoration-color:#fff}
+.bubble{border-color:rgba(255,255,255,.6);background:radial-gradient(ellipse at 25% 22%,#ffffffee 5%,#ffffff80 28%,transparent 65%),linear-gradient(140deg,#ffffff66,#ffffff22 50%,var(--tone))}
+.copyright{color:rgba(255,255,255,.62)}
+.contact-button{background:var(--accent);color:#fff}
+.contact-button:hover{background:#c2543f}
+.contact-button:focus-visible{outline-color:#fff}
+@media(max-width:650px){
+ .sidebar:before{background:linear-gradient(135deg,#1a307a 0%,#2c53cc 55%,#5a55c7 100%)}
+ .sidebar nav,.sidebar.is-compact nav{background:transparent}
+}
+
