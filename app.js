@@ -17,7 +17,7 @@ projects[1].images=[
 
 projects[4].title='タラスブルバ｜ペルソナ分析・カスタマージャーニーマップ';
 projects[4].description='アウトドアへの関心の有無でユーザーを分け、各4タイプのペルソナを整理。認知・情報収集から比較、検討、購入に至る行動や思考、感情の変化を可視化したリサーチ資料です。';
-projects[4].detailLabel='整理した内容を見る';
+projects[4].detailLabel='整理した内容';
 projects[4].details=[['PERSONA','アウトドアに関心がある人・ない人それぞれ4タイプを設定し、属性や行動の特徴、ゴール・課題点を整理。'],['JOURNEY','認知興味・情報収集・比較・検討・アウトドア製品購入の5フェーズで、場所、チャネル、行動・タッチポイント、思考、感情曲線を整理。'],['INSIGHT','関心がある人とない人の違いを比較し、既存コミュニティからの情報収集、実物を試す体験、日常で使える製品への関心など、アプローチを考えるためのインサイトをまとめています。']];
 projects[4].images=[{"src": "assets/taras-boulba-cjm-1.webp", "caption": "関心がある人のペルソナ", "alt": "タラスブルバのリサーチ資料：関心がある人のペルソナ", "width": 2000, "height": 1415}, {"src": "assets/taras-boulba-cjm-2.webp", "caption": "関心がある人のカスタマージャーニー", "alt": "タラスブルバのリサーチ資料：関心がある人のカスタマージャーニー", "width": 2200, "height": 1556}, {"src": "assets/taras-boulba-cjm-3.webp", "caption": "関心がない人のペルソナ", "alt": "タラスブルバのリサーチ資料：関心がない人のペルソナ", "width": 2200, "height": 1556}, {"src": "assets/taras-boulba-cjm-4.webp", "caption": "関心がない人のカスタマージャーニー", "alt": "タラスブルバのリサーチ資料：関心がない人のカスタマージャーニー", "width": 2200, "height": 1556}];
 
@@ -49,8 +49,7 @@ projects[5].images=[
 ];
 projects[3].title='通信教材「ポピー」｜外表紙の企画・ディレクション';
 projects[3].description='通信教材「ポピー」の外表紙を約1年半担当。企画考案、進捗管理、イラスト発注、デザイン制作まで進行しました。地図とクイズを組み合わせて学びへの興味を引き出す表紙から、題材と色合いの異なる5点を選んで掲載しています。';
-projects[3].detailLabel='担当内容を見る';
-projects[3].details=[['ROLE','企画・進行管理・イラスト発注・デザイン制作を担当。調査結果の共有にも図やイラストを活用してきました。']];
+projects[3].details=[];
 projects[3].images=[
  {src:'assets/popy-5-2019-04.webp',width:2527,height:1701,caption:'小学ポピー5年・2019年4月号 外表紙',alt:'ヨーロッパの地図とクイズを組み合わせた小学ポピー5年4月号の外表紙'},
  {src:'assets/popy-5-2019-08.webp',width:2527,height:1701,caption:'小学ポピー5年・2019年8月号 外表紙',alt:'ブラジルの地図とクイズを組み合わせた小学ポピー5年8月号の外表紙'},
@@ -61,7 +60,7 @@ projects[3].images=[
 projects.push({
  title:'病院｜利用体験の整理とデジタルサイネージ提案',
  description:'病院の利用経験者8名へのグループインタビューをもとに、待ち時間、接客、院内の情報提供に関するニーズを整理した資料です。良い体験・悪い体験を比較し、待ち時間・受付番号の表示、病気の説明、癒しの動画、院内マップなど、デジタルサイネージで届ける情報の提案につなげています。',
- detailLabel:'調査から提案への流れを見る',
+ detailLabel:'調査から提案への流れ',
  details:[['RESEARCH','調査人数と方法は掲載資料の記載に基づきます。ホワイトボード写真では、利用体験を付箋で分類し、待ち時間やコミュニケーションの課題を整理しています。'],['PROPOSAL','患者への情報提供に加え、病院の案内・求人、スタッフ向け教育や連絡事項の配信も提案。資料に示す導入メリットは提案段階のもので、実測された改善成果ではありません。']],
  images:[
   {src:'assets/hospital-research-1.webp',width:2200,height:1556,caption:'1. 病院経営・患者・業務の課題を整理',alt:'病院を取り巻く課題を病院経営、患者、業務の3つの視点で整理した資料'},
@@ -438,12 +437,8 @@ function showView(view,{resetScroll=false}={}){
     }
     const title=document.createElement('h3');title.textContent=project.title;
     const description=document.createElement('p');description.textContent=project.description;
-    const alwaysVisible=project===projects[usb.line]||project.showDetails===true;
-    const details=document.createElement(alwaysVisible?'section':'details');
-    if(alwaysVisible)details.className='related-results';
-    const summary=document.createElement(alwaysVisible?'h4':'summary');summary.textContent=project.detailLabel||(project.images?'関連施策の実績（職務経歴書より）':'担当内容を見る');if(!alwaysVisible)details.append(summary);
-    project.details.forEach(([,value])=>{const paragraph=document.createElement('p');paragraph.textContent=value;details.append(paragraph)});
-    article.append(title,description,image);if(project.details.length)article.append(details);content.append(article);
+    const detailParagraphs=project.details.map(([,value])=>{const paragraph=document.createElement('p');paragraph.textContent=value;return paragraph});
+    article.append(title,description,...detailParagraphs,image);content.append(article);
   });
   revealWorks();
 }
