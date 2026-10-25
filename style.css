@@ -251,7 +251,7 @@ body.viewer-open{overflow:hidden}#image-viewer{position:fixed;inset:0;width:100v
 
 .profile h2.intro-title .title-letter{margin-right:.025em}
 .profile h2.intro-title .title-letter:last-child{margin-right:0}
-@media(max-width:650px){.profile h2.intro-title{font-size:21cqw}}
+@media(max-width:650px){.profile h2.intro-title{font-size:15cqw}}
 
 /* Optical pair adjustments, with room retained around r/t/f. */
 .profile h2.intro-title .title-letter:nth-child(1){margin-right:-.045em}
@@ -304,7 +304,9 @@ body.viewer-open{overflow:hidden}#image-viewer{position:fixed;inset:0;width:100v
 .sidebar h1{color:#fff}
 .sidebar h1>span{color:rgba(255,255,255,.72)}
 .sidebar nav{border-color:rgba(255,255,255,.22)}
-.menu-link{color:#fff}
+.menu-link{color:#fff;opacity:.88;text-shadow:0 1px 6px rgba(15,40,90,.22)}
+.menu-link:hover,.menu-link[aria-pressed="true"]{opacity:1}
+.sidebar h1,.copyright{text-shadow:0 1px 6px rgba(15,40,90,.18)}
 .menu-link[aria-pressed="true"]>span:last-child,.menu-link:hover>span:last-child{text-decoration-color:#fff}
 .bubble{border-color:rgba(255,255,255,.6);background:radial-gradient(ellipse at 25% 22%,#ffffffee 5%,#ffffff80 28%,transparent 65%),linear-gradient(140deg,#ffffff66,#ffffff22 50%,var(--tone))}
 .copyright{color:rgba(255,255,255,.62)}
