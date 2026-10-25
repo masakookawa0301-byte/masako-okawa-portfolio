@@ -66,7 +66,7 @@ body.viewer-open{overflow:hidden}#image-viewer{position:fixed;inset:0;width:100v
 @media(max-width:650px){.content>h2.section-heading{font-size:42px;margin-bottom:30px;padding-bottom:22px}.profile-bio h3.section-heading{font-size:36px}.content>h2.section-heading:before,.profile-bio h3.section-heading:before{font-size:9px;margin-bottom:12px}}
 @media(prefers-reduced-motion:reduce){.section-heading>span,.content>h2.section-heading:before,.profile-bio h3.section-heading:before,.content>h2.section-heading:after,.profile-bio h3.section-heading:after{animation:none}}
 /* Pale blue navigation field separates browsing from the artwork. */
-.sidebar{isolation:isolate}.sidebar:before{content:'';position:absolute;z-index:-1;top:-45px;left:-100vw;right:-40px;height:100vh;background:#edf3fc;pointer-events:none}
+.sidebar{isolation:isolate}.sidebar:before{content:'';position:absolute;z-index:-1;top:-45px;left:-100vw;right:-40px;height:100vh;background:#edf3fc url('assets/sidebar-network.svg') top right/440px auto no-repeat;pointer-events:none}
 @media(max-width:1100px){.sidebar:before{right:-22.5px}}
 @media(max-width:800px){.sidebar:before{top:-35px;right:-17.5px}}
 @media(max-width:650px){.sidebar{padding-bottom:24px}.sidebar:before{top:-28px;left:-24px;right:-24px;bottom:0;height:auto}.content{padding-top:34px}}
