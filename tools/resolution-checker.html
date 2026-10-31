@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>印刷用 画像の解像度チェッカー</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1f2328; --sub:#5b6168; --line:#e3e5e8; --bg:#fafaf8; --card:#ffffff;
+    --red:#d6402f; --ok:#1f8a4c; --warn:#c98a00; --ng:#d6402f;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Noto Sans JP",system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.7}
+  .wrap{max-width:720px;margin:0 auto;padding:28px 18px 60px}
+  header .tag{display:inline-block;font-size:12px;font-weight:700;color:var(--red);border:1.5px solid var(--red);border-radius:4px;padding:1px 8px;letter-spacing:.05em}
+  h1{font-size:24px;margin:10px 0 6px;line-height:1.4}
+  .lead{color:var(--sub);font-size:14px;margin:0 0 22px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:16px}
+  .step{font-size:13px;font-weight:700;color:var(--red);margin-bottom:8px}
+  .drop{border:2px dashed #c9ccd1;border-radius:10px;padding:26px 14px;text-align:center;cursor:pointer;transition:.15s;color:var(--sub);font-size:14px}
+  .drop:hover,.drop.on{border-color:var(--red);background:#fff6f4}
+  .drop strong{display:block;color:var(--ink);font-size:16px;margin-bottom:4px}
+  .imginfo{display:none;gap:14px;align-items:center;margin-top:14px}
+  .imginfo img{width:84px;height:84px;object-fit:cover;border-radius:8px;border:1px solid var(--line)}
+  .imginfo .meta{font-size:14px}
+  .imginfo .meta b{font-size:18px}
+  label{font-size:14px;font-weight:500;display:block;margin-bottom:6px}
+  select,input[type=number]{font:inherit;font-size:15px;padding:9px 10px;border:1px solid #cfd3d8;border-radius:8px;background:#fff;width:100%}
+  .row{display:flex;gap:10px}
+  .row>div{flex:1}
+  .custom{display:none;margin-top:10px}
+  .check{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:14px}
+  .check input{width:18px;height:18px;accent-color:var(--red)}
+  .result{display:none}
+  .verdict{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+  .badge{flex:none;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-size:30px;font-weight:700;color:#fff}
+  .verdict h2{margin:0;font-size:20px;line-height:1.4}
+  .verdict p{margin:2px 0 0;color:var(--sub);font-size:14px}
+  .ppi{font-size:40px;font-weight:700;letter-spacing:-.02em}
+  .ppi small{font-size:16px;font-weight:500;color:var(--sub);margin-left:4px}
+  .scale{position:relative;height:10px;border-radius:5px;background:linear-gradient(90deg,var(--ng) 0 33%,var(--warn) 33% 50%,#7bbf5a 50% 58%,var(--ok) 58% 100%);margin:14px 0 4px}
+  .marker{position:absolute;top:-5px;width:4px;height:20px;background:var(--ink);border-radius:2px;transform:translateX(-50%)}
+  .scale-l{display:flex;justify-content:space-between;font-size:11px;color:var(--sub)}
+  dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px;margin:16px 0 0}
+  dt{color:var(--sub)}
+  dd{margin:0;font-weight:500}
+  @media (max-width:480px){dl{grid-template-columns:1fr;gap:0}dd{margin-bottom:8px}}
+  .tip{background:#f4f5f7;border-radius:8px;padding:12px 14px;font-size:13px;margin-top:14px;color:#3a3f45}
+  .guide table{width:100%;border-collapse:collapse;font-size:14px}
+  .guide td{padding:8px 6px;border-bottom:1px solid var(--line)}
+  .guide td:first-child{white-space:nowrap;font-weight:700}
+  .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle}
+  footer{margin-top:28px;font-size:13px;color:var(--sub);text-align:center}
+  footer .by{font-weight:700;color:var(--ink)}
+  .note{font-size:12px;color:var(--sub);margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="tag">無料ツール</span>
+    <h1>印刷用 画像の解像度チェッカー</h1>
+    <p class="lead">画像を入れて、印刷するサイズを選ぶだけ。その画像が印刷でキレイに出るか（ボケないか）を判定します。</p>
+  </header>
+
+  <section class="card">
+    <div class="step">STEP 1　画像を選ぶ</div>
+    <div class="drop" id="drop">
+      <strong>ここに画像をドロップ</strong>またはタップして選択（JPG・PNGなど）
+      <input type="file" id="file" accept="image/*" hidden>
+    </div>
+    <div class="imginfo" id="imginfo">
+      <img id="thumb" alt="">
+      <div class="meta"><div id="fname"></div><b id="px"></b></div>
+    </div>
+    <p class="note">画像はお使いの端末の中だけで処理され、どこにも送信されません。</p>
+  </section>
+
+  <section class="card">
+    <div class="step">STEP 2　印刷するサイズを選ぶ</div>
+    <label for="size">画像を置く大きさ</label>
+    <select id="size">
+      <option value="210x297">A4（210×297mm）全面</option>
+      <option value="148x210">A5（148×210mm）全面</option>
+      <option value="182x257">B5（182×257mm）全面</option>
+      <option value="105x148">A6（105×148mm）全面</option>
+      <option value="297x420">A3（297×420mm）全面</option>
+      <option value="100x148">はがき（100×148mm）全面</option>
+      <option value="91x55">名刺（91×55mm）全面</option>
+      <option value="105x74">A4の1/4くらい（105×74mm）</option>
+      <option value="custom">自分で入力する</option>
+    </select>
+    <div class="custom" id="custom">
+      <div class="row">
+        <div><label for="cw">幅（mm）</label><input type="number" id="cw" value="100" min="1"></div>
+        <div><label for="ch">高さ（mm）</label><input type="number" id="ch" value="70" min="1"></div>
+      </div>
+    </div>
+    <label class="check"><input type="checkbox" id="bleed" checked>塗り足し（上下左右3mm）を含めて計算する</label>
+  </section>
+
+  <section class="card result" id="result">
+    <div class="step">判定結果</div>
+    <div class="verdict">
+      <div class="badge" id="badge"></div>
+      <div><h2 id="vtitle"></h2><p id="vtext"></p></div>
+    </div>
+    <div class="ppi" id="ppi"></div>
+    <div class="scale"><div class="marker" id="marker"></div></div>
+    <div class="scale-l"><span>0</span><span>200</span><span>300</span><span>350</span><span>600 ppi</span></div>
+    <dl>
+      <dt>画像のピクセル数</dt><dd id="r-px"></dd>
+      <dt>印刷する大きさ</dt><dd id="r-mm"></dd>
+      <dt>350ppiでキレイに出る最大サイズ</dt><dd id="r-max"></dd>
+    </dl>
+    <div class="tip" id="tip"></div>
+  </section>
+
+  <section class="card guide">
+    <div class="step">目安</div>
+    <table>
+      <tr><td><span class="dot" style="background:var(--ok)"></span>350ppi以上</td><td>印刷会社の推奨どおり。安心して入稿できます</td></tr>
+      <tr><td><span class="dot" style="background:#7bbf5a"></span>300〜349ppi</td><td>ほぼ問題なし。ふつうに見る分には十分キレイです</td></tr>
+      <tr><td><span class="dot" style="background:var(--warn)"></span>200〜299ppi</td><td>近くで見ると少し粗さが出ます。小さく使うのがおすすめ</td></tr>
+      <tr><td><span class="dot" style="background:var(--ng)"></span>200ppi未満</td><td>ボケ・ギザギザが目立ちます。差し替えか縮小が必要です</td></tr>
+    </table>
+    <p class="note">※ ppi＝1インチ（25.4mm）あたりに並ぶ画素の数。印刷会社の多くはカラー写真で300〜350ppiを推奨しています。スマホで見るときれいな画像でも、印刷すると粗くなることがあります。</p>
+  </section>
+
+  <footer>
+    <div>作成：<span class="by">赤ペンデザイナーマサ</span>（デザイン歴10年／印刷入稿まわりの専門）</div>
+    <div>入稿データのチェックや修正もお手伝いしています。</div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  let img = null;
+
+  const drop = $('drop'), file = $('file');
+  drop.addEventListener('click', () => file.click());
+  ['dragenter','dragover'].forEach(e => drop.addEventListener(e, ev => {ev.preventDefault(); drop.classList.add('on');}));
+  ['dragleave','drop'].forEach(e => drop.addEventListener(e, ev => {ev.preventDefault(); drop.classList.remove('on');}));
+  drop.addEventListener('drop', ev => { const f = ev.dataTransfer.files[0]; if (f) load(f); });
+  file.addEventListener('change', () => { if (file.files[0]) load(file.files[0]); });
+
+  function load(f){
+    if (!f.type.startsWith('image/')) { showError('画像ファイルを選んでください'); return; }
+    const url = URL.createObjectURL(f);
+    const im = new Image();
+    im.onload = () => {
+      img = {w: im.naturalWidth, h: im.naturalHeight};
+      $('thumb').src = url;
+      $('fname').textContent = f.name;
+      $('px').textContent = img.w.toLocaleString() + ' × ' + img.h.toLocaleString() + ' px';
+      $('imginfo').style.display = 'flex';
+      calc();
+    };
+    im.onerror = () => showError('この画像は読み込めませんでした（CMYKのJPGやPSDなどは、ブラウザで開けない場合があります）');
+    im.src = url;
+  }
+
+  function showError(msg){
+    $('imginfo').style.display = 'flex';
+    $('fname').textContent = msg;
+    $('px').textContent = '';
+    $('thumb').removeAttribute('src');
+    $('result').style.display = 'none';
+  }
+
+  $('size').addEventListener('change', () => {
+    $('custom').style.display = $('size').value === 'custom' ? 'block' : 'none';
+    calc();
+  });
+  ['cw','ch','bleed'].forEach(id => $(id).addEventListener('input', calc));
+
+  function calc(){
+    if (!img) return;
+    let w, h;
+    if ($('size').value === 'custom') {
+      w = parseFloat($('cw').value); h = parseFloat($('ch').value);
+      if (!(w > 0 && h > 0)) return;
+    } else {
+      [w, h] = $('size').value.split('x').map(Number);
+    }
+    // 画像の向きに合わせて縦横をそろえる
+    const imgLand = img.w >= img.h, boxLand = w >= h;
+    if (imgLand !== boxLand) [w, h] = [h, w];
+    const bleed = $('bleed').checked ? 6 : 0;
+    const W = w + bleed, H = h + bleed;
+    // 枠いっぱいに敷き詰めたときの実効解像度
+    const ppi = Math.min(img.w / (W / 25.4), img.h / (H / 25.4));
+    const p = Math.round(ppi);
+
+    let color, mark, title, text, tip;
+    if (p >= 350) { color='var(--ok)'; mark='◎'; title='このまま入稿してOK';
+      text='印刷会社の推奨（350ppi）を満たしています。';
+      tip='解像度は十分です。あとは、カラーモード（RGBかCMYKか）や塗り足しなど、ほかの入稿ルールも確認しておきましょう。'; }
+    else if (p >= 300) { color='#7bbf5a'; mark='◯'; title='ほぼ問題なし';
+      text='ふつうに見る分には、きれいに印刷できます。';
+      tip='写真集や商品カタログなど、近くでじっくり見せたい印刷物なら、もう一回り大きい画像があると安心です。'; }
+    else if (p >= 200) { color='var(--warn)'; mark='△'; title='少し粗くなるかも';
+      text='近くで見ると、ぼやけやギザギザが気になる可能性があります。';
+      tip='同じ写真の元データ（スマホやカメラで撮ったままのもの）があれば、そちらに差し替えるのがおすすめです。難しければ、画像を使う大きさを下の「最大サイズ」以内に小さくしましょう。'; }
+    else { color='var(--ng)'; mark='✕'; title='このままだとボケます';
+      text='印刷すると、ぼやけ・ギザギザがはっきり出ます。';
+      tip='SNSやWebから保存した画像は、印刷には小さすぎることがほとんどです。元データを用意するか、画像を使う大きさを下の「最大サイズ」以内に縮めてください。ソフトで画像を引き伸ばしても、きれいにはなりません。'; }
+
+    $('badge').style.background = color; $('badge').textContent = mark;
+    $('vtitle').textContent = title; $('vtext').textContent = text;
+    $('ppi').innerHTML = p.toLocaleString() + '<small>ppi</small>';
+    // マーカー位置：0-200=0-33%, 200-300=33-50%, 300-350=50-58%, 350-600=58-100%
+    let pos;
+    if (p < 200) pos = p/200*33;
+    else if (p < 300) pos = 33 + (p-200)/100*17;
+    else if (p < 350) pos = 50 + (p-300)/50*8;
+    else pos = Math.min(100, 58 + (p-350)/250*42);
+    $('marker').style.left = pos + '%';
+
+    $('r-px').textContent = img.w.toLocaleString() + ' × ' + img.h.toLocaleString() + ' px';
+    $('r-mm').textContent = w + ' × ' + h + ' mm' + (bleed ? '（塗り足し込み ' + W + ' × ' + H + ' mm）' : '');
+    const mw = Math.floor(img.w / 350 * 25.4), mh = Math.floor(img.h / 350 * 25.4);
+    $('r-max').textContent = '約 ' + mw + ' × ' + mh + ' mm まで';
+    $('tip').textContent = tip;
+    $('result').style.display = 'block';
+  }
+})();
+</script>
+</body>
+</html>
